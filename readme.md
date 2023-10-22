@@ -1,5 +1,6 @@
 # Important 'BuildSrc' are Empty!
 ```clone and place files on "buildSrc" directory```
+
  This directory having sources are seperately maintained, take a clone from there [Android Compact Dependencies](https://github.com/merlinJeyakumar/android-compact-dependencies.git)
 
 # Required "Modules"
