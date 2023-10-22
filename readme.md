@@ -1,4 +1,4 @@
-# kotlin-multi-module-mvvm-architecture-android
+# kotlin-single-module-mvvm-architecture-android
 
 ## Important 'BuildSrc' are Empty!
 ```clone and place files on "buildSrc" directory```
