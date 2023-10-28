@@ -31,6 +31,7 @@ android {
     buildFeatures {
         viewBinding = true
         dataBinding = true
+        buildConfig = true
     }
 
     compileOptions {
@@ -43,9 +44,9 @@ android {
             languageVersion.set(JavaLanguageVersion.of(17))
         }
     }
-    kotlinOptions {
+    /*kotlinOptions {
         jvmTarget = "17"
-    }
+    }*/
 
     lint {
         baseline = file("lint-baseline.xml")
