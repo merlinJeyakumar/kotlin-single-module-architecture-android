@@ -2,7 +2,7 @@ package com.nativedevps.myapplication.ui.main.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import com.nativedevps.myapplication.databinding.ItemUserBinding
+import com.nativedevps.arch.databinding.ItemUserBinding
 import com.nativedevps.myapplication.domain.model.user_list.UsersListResponseModel
 import com.nativedevps.support.base_class.AbstractRecyclerAdapter
 import com.nativedevps.support.base_class.BaseViewHolder

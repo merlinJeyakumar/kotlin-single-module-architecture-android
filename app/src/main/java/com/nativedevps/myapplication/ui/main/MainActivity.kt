@@ -1,8 +1,8 @@
 package com.nativedevps.myapplication.ui.main
 
 import android.os.Bundle
-import com.nativedevps.myapplication.R
-import com.nativedevps.myapplication.databinding.ActivityMainBinding
+import com.nativedevps.arch.R
+import com.nativedevps.arch.databinding.ActivityMainBinding
 import com.nativedevps.myapplication.domain.model.user_list.UsersListResponseModel
 import com.nativedevps.myapplication.ui.main.adapter.UserAdapter
 import com.nativedevps.support.base_class.AbstractRecyclerAdapter

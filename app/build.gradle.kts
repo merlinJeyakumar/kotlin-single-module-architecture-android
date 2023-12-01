@@ -101,7 +101,7 @@ dependencies {
     implementation(RequiredLibraries.viewmodel_ktx)
     requiredLibraries()
     networkLibraries()
-    //roomLibraries()
+    roomLibraries()
     supportLibraries()
     imageLoaderLibraries()
     dataStoreLite()
