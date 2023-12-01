@@ -52,11 +52,6 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
         }
     }
 
-    /*
-    * Reusing list from adapter to avoid persistance and network
-    */
-    private val currencyModelList get() = userAdapter.getList()
-
     private val userAdapter: UserAdapter by lazy {
         return@lazy UserAdapter().also {
             it.setListener(itemListener)
