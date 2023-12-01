@@ -17,7 +17,7 @@ class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
 ) {
 
     override fun onInit(savedInstanceState: Bundle?) {
-        TODO("Not yet implemented")
+        //todo:
     }
 
     private fun initView() = with(binding) {
