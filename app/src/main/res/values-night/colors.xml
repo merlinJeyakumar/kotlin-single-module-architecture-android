@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+
+    <color name="white">#FFFFFFFF</color>
+    <color name="dayNightWhite">#FFFFFF</color>
+    <color name="dayNightBlack">#FF000000</color>
+
+    <color name="colorPrimary">#E2E8F0</color>
+    <color name="colorAccent">#94A3B8</color>
+    <color name="colorTextIcons">#D1D5DB</color>
+    <color name="colorPrimaryText">#E2E8F0</color>
+    <color name="colorSecondaryText">#BEC4CB</color>
+    <color name="colorSecondary">#94A3B8</color>
+
+    <color name="color_primary">#E2E8F0</color>
+    <color name="color_tertiary">#94A3B8</color>
+    <color name="color_quaternary">#E2E8F0</color>
+    <color name="color_main_button_disabled">#8E8E8E</color>
+
+    <color name="color_accent_blue">#0EA5E9</color>
+    <color name="color_tag_green">#22C55E</color>
+    <color name="color_tag_red">#EF4444</color>
+    <color name="color_tag_gray">#6B7280</color>
+
+    <color name="color_component_gray_border">#CBD5E1</color>
+    <color name="color_textinputlayout_hint_text">#94A3B8</color>
+
+    <color name="color_text_primary">#E2E8F0</color>
+    <color name="color_text_secondary">#475569</color>
+    <color name="color_text_tertiary">#000000</color>
+
+    <color name="color_fragment_background">#00000000</color>
+    <color name="color_search_edit_text_background">#F3F4F6</color>
+
+    <color name="color_ticket_separator">#B3E5E7EB</color>
+    <color name="color_ticket_separator_dashed">#CBD5E1</color>
+    <color name="color_link">#0284C7</color>
+
+    <color name="color_transparent_button">#F1F5F9</color>
+
+    <color name="color_error_text">#DC2626</color>
+    <color name="alphaGrey">#60CACACA</color>
+
+    <color name="color_icon_unselected">#94A3B8</color>
+
+    <color name="color_badge">#0EA5E9</color>
+    <color name="description_color">#374151</color>
+    <color name="highlighted_color">#5E000000</color>
+    <color name="colorToolbar">#00000000</color>
+    <color name="transparentColor">#00000000</color>
+
+    <color name="lightBlue900">#002BC6</color>
+    <color name="lightBlue500">#00AAFF</color>
+
+
+    <color name="side_bar_color">#70000000</color>
+    <color name="bottom_scalebar_color">#701A1A1A</color>
+
+</resources>

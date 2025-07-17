@@ -1,10 +1,11 @@
 plugins {
     id("com.android.application")
+    id("com.google.devtools.ksp")
     id("kotlin-android")
     id("kotlin-parcelize")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-    //id("com.google.gms.google-services")
+    id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("org.jetbrains.kotlin.android")
 }
@@ -13,8 +14,13 @@ android {
     namespace = Configs.applicationId
     compileSdk = Configs.compileSdkVersion
 
+    lint {
+        abortOnError = false
+        ignoreWarnings = true
+    }
+
     defaultConfig {
-        minSdk = Configs.minSdkVersion
+        minSdk = 21
         targetSdk = Configs.targetSdkVersion
         applicationId = Configs.applicationId
         versionCode = Configs.versionCode
@@ -90,23 +96,30 @@ android {
     }
     configurations {
         all {
-            //exclude("some library")
+            exclude("commons-logging","commons-logging")
+            exclude("org.apache.httpcomponents")
         }
     }
 }
 
 dependencies {
+    implementation(fileTree(mapOf("dir" to "../libs", "include" to listOf("*.aar", "*.jar"))))
+
     implementation(project(":jeyksupport"))
+    implementation(project(NativeDevps.nativedevps))
     implementation(RequiredLibraries.core_ktx)
     implementation(RequiredLibraries.viewmodel_ktx)
+    implementation("androidx.appcompat:appcompat:1.6.1")
+    implementation("com.google.android.material:material:1.10.0")
+    implementation("androidx.constraintlayout:constraintlayout:2.1.4")
     requiredLibraries()
     networkLibraries()
     roomLibraries()
     supportLibraries()
     imageLoaderLibraries()
     dataStoreLite()
-    //implementation(platform(firebase_platform_bom))
-    //firebaseLibraries()
+    implementation(platform(FirebaseLibraries.firebase_platform_bom))
+    firebaseLibraries()
     implementation(NavigationLibraries.navigationUi)
     implementation(NavigationLibraries.navigationFragment)
     testLibraries()

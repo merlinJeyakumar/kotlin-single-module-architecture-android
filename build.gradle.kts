@@ -1,5 +1,6 @@
 plugins {
-    id("org.jetbrains.kotlin.android") version "1.8.20" apply false
+    id("org.jetbrains.kotlin.android") version "1.8.10" apply false
+    id("com.google.devtools.ksp") version "1.9.23-1.0.20" apply false
     `kotlin-dsl`
     `maven-publish`
 }
@@ -20,8 +21,8 @@ buildscript {
         classpath(ProjectRootLibraries.classpathGradle)
         classpath(ProjectRootLibraries.classpathKotlinGradle)
         classpath(ProjectRootLibraries.classpathDaggerHiltVersion)
-        //classpath(ProjectRootLibraries.classPathGoogleService)
-        //classpath(ProjectRootLibraries.classPathFirebasePerfs)
+        classpath(ProjectRootLibraries.classPathGoogleService)
+        classpath(ProjectRootLibraries.classPathFirebasePerfs)
         classpath(ProjectRootLibraries.classpathCrashlytics)
     }
 }

@@ -2,7 +2,10 @@ package com.nativedevps.myapplication.di
 
 import android.content.Context
 import com.chuckerteam.chucker.api.ChuckerInterceptor
+import com.nativedevps.data.repositories.remote.usecase.app_authorize.AppAuthorizeUseCase
+import com.nativedevps.domain.datasources.local.IDataStorePreferenceDataSource
 import com.nativedevps.myapplication.domain.datasource.rest.UserApiService
+import com.nativedevps.myapplication.utility.RemoteConfigurationListener
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -14,6 +17,7 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import javax.inject.Qualifier
 import javax.inject.Singleton
 

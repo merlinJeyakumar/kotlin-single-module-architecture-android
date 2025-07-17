@@ -2,6 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
@@ -11,24 +12,30 @@
     <application
         android:name="com.nativedevps.myapplication.BaseApplication"
         android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:extractNativeLibs="false"
+        android:hardwareAccelerated="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:largeHeap="true"
+        android:preserveLegacyExternalStorage="true"
         android:requestLegacyExternalStorage="true"
+        android:resizeableActivity="false"
         android:supportsRtl="true"
-        android:theme="@style/Base.Theme.MyApplication"
+        android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true"
-        tools:targetApi="m">
+        tools:targetApi="s">
         <activity
-            android:name="com.nativedevps.myapplication.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTask">
+            android:launchMode="singleTask"
+            android:name="com.nativedevps.myapplication.ui.home.HomeActivity"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -39,19 +46,44 @@
                 android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/provider_paths" />
         </provider>
-
         <provider
             android:name="androidx.startup.InitializationProvider"
             android:authorities="${applicationId}.androidx-startup"
             android:exported="false"
             tools:node="merge">
-
             <meta-data
                 android:name="androidx.work.WorkManagerInitializer"
                 android:value="androidx.startup"
                 tools:node="remove" />
-
         </provider>
+
+        <service
+            android:name="com.nativedevps.myapplication.service.FcmService"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <activity android:name="com.nativedevps.ui.NotificationActivity" />
+        <activity
+            android:name="com.nativedevps.ui.login.LoginActivity"
+            android:launchMode="standard"
+            android:taskAffinity="${applicationId}"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="com.nativedevps.ui.register.RegisterActivity"
+            android:launchMode="standard"
+            android:taskAffinity="${applicationId}"
+            android:windowSoftInputMode="adjustResize" />
+
+        <activity
+            android:name="com.nativedevps.ui.contact_us.ContactUsActivity"
+            android:launchMode="standard"
+            android:taskAffinity="${applicationId}"
+            android:windowSoftInputMode="adjustResize" />
+
     </application>
 
 </manifest>

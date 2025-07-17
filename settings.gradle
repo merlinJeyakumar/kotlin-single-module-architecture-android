@@ -1,3 +1,9 @@
 include ':app'
 include ':jeyksupport'
 project(':jeyksupport').projectDir = new File(rootDir, 'modules/jeyksupport')
+
+//NativeDevps
+include ':nativedevps'
+project(':nativedevps').projectDir = new File(rootDir, 'modules/nativedevps/nativedevps')
+
+rootProject.name = 'NativeDevps-Arch'

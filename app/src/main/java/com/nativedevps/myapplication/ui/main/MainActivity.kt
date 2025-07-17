@@ -1,60 +1,54 @@
 package com.nativedevps.myapplication.ui.main
 
 import android.os.Bundle
+import androidx.appcompat.app.AppCompatDelegate
 import com.nativedevps.arch.R
 import com.nativedevps.arch.databinding.ActivityMainBinding
-import com.nativedevps.myapplication.domain.model.user_list.UsersListResponseModel
-import com.nativedevps.myapplication.ui.main.adapter.UserAdapter
-import com.nativedevps.support.base_class.AbstractRecyclerAdapter
+import com.nativedevps.base.NativeDevpsBaseActivity
 import com.nativedevps.support.base_class.BaseActivity
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : BaseActivity<ActivityMainBinding, MainViewModel>(
+class MainActivity : NativeDevpsBaseActivity<ActivityMainBinding, MainViewModel>(
     R.layout.activity_main,
     MainViewModel::class.java
 ) {
 
     override fun onInit(savedInstanceState: Bundle?) {
-        //todo:
+        super.onInit(savedInstanceState)
+
+        initView()
+        initListener()
+        initData()
+        initPreview()
+    }
+
+    private fun initListener() {
+        //todo: initialize view listeners
     }
 
     private fun initView() = with(binding) {
-        //noop
+        //todo: initialize listeners
+
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO); //todo: set drawables for night mode
     }
 
-    /*
-    * Collect information from Rest API and Cache on the DataStorePreference
-    * persistance and update with a UI
-    */
+
     private fun initData() = with(viewModel) {
-        //todo:
+        //todo: initial livedata/observer
     }
 
 
-    /*
-    *Initial rendering have no-operations
-    */
     private fun initPreview() = with(binding) {
-        //noop
+        //todo: initial rendering to view
     }
 
-
-    private val itemListener = object :
-        AbstractRecyclerAdapter.ItemListener<UsersListResponseModel.Data>() {
-        override fun optionSelected(position: Int, item: UsersListResponseModel.Data, option: Int) {
-            //todo
-        }
-
-        override fun itemSelected(position: Int, item: UsersListResponseModel.Data) {
-            //todo
-        }
+    override fun onDestroy() {
+        super.onDestroy()
     }
 
-    private val userAdapter: UserAdapter by lazy {
-        return@lazy UserAdapter().also {
-            it.setListener(itemListener)
-        }
+    override fun onBackPressed() {
+        super.onBackPressed()
     }
 }
