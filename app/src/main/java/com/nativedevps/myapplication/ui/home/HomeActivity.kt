@@ -4,7 +4,6 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import androidx.core.app.NotificationCompat
-import com.google.errorprone.annotations.Keep
 import com.nativedevps.arch.R
 import com.nativedevps.arch.databinding.ActivityHomeBinding
 import com.nativedevps.base.NativeDevpsBaseActivity
@@ -13,11 +12,12 @@ import com.nativedevps.support.custom_views.dialogs.LoaderDialog
 import com.nativedevps.support.utility.date_time_utility.MillisecondUtility.now
 import com.nativedevps.support.utility.date_time_utility.getStringDateFromMillis
 import com.nativedevps.support.utility.debugging.Log
-import com.nativedevps.support.utility.networking.attemptOrNull
 import com.nativedevps.support.utility.text.getVersionName
 import com.nativedevps.support.utility.threading.runOnAsyncThread
 import com.nativedevps.ui.about.dialog.AboutDialog
 import com.nativedevps.ui.contact_us.ContactUsActivity
+import com.nativedevps.ui.contact_us.NotificationNavigation.ContactUsNavigationPath
+import com.nativedevps.ui.contact_us.findNavigatingPath
 import dagger.hilt.android.AndroidEntryPoint
 import io.karn.notify.Notify
 import kotlinx.coroutines.delay
@@ -42,21 +42,20 @@ class HomeActivity : NativeDevpsBaseActivity<ActivityHomeBinding, HomeViewModel>
         }
         Log.v("checkNotificationPayload", "LinkUrl: ${intent.extras?.getString(CONST_NOTIFICATION_LINK_URL)}")
 
-        val linkUrl = intent.extras?.getString(CONST_NOTIFICATION_LINK_URL) ?: return
-        val notificationNavigation = NotificationNavigation(linkUrl)
-        notificationNavigation.navigatingPath?.let { navigatingPath ->
-            when (navigatingPath) {
-                is NotificationNavigation.ContactUsNavigationPath -> {
-                    if (navigatingPath.isRefreshRequired) {
+        intent.extras?.getString(CONST_NOTIFICATION_LINK_URL)?.let { Uri.parse(it) }?.apply {
+            findNavigatingPath { navigatingPath ->
+                when (navigatingPath) {
+                    is ContactUsNavigationPath -> {
                         ContactUsActivity.startSession(
                             this@HomeActivity,
-                            viewModel
+                            viewModel,
+                            Intent().apply {
+                                data = navigatingPath.uri
+                            }
                         )
                     }
                 }
             }
-        } ?: run {
-            Log.e("HomeActivity", "No valid navigation path found in notification")
         }
     }
 
@@ -154,48 +153,5 @@ class HomeActivity : NativeDevpsBaseActivity<ActivityHomeBinding, HomeViewModel>
     override fun onDestroy() {
         viewModel.analyticAppExit()
         super.onDestroy()
-    }
-}
-
-@Keep
-class NotificationNavigation(
-    url: String,
-    private var parsedUri: Uri = Uri.parse(url)
-) {
-
-    val navigatingPath: NavigatingPath?
-        get() {
-            return attemptOrNull {
-                NavigatingPathType.valueOf(
-                    parsedUri.pathSegments.lastOrNull() ?: error("uri path was missing")
-                ).let {
-                    it.navigatingPath.apply {
-                        this.uri = parsedUri
-                    }
-                }
-            }
-        }
-
-    @Keep
-    sealed class NavigatingPath {
-        abstract val path: String
-        abstract var uri: Uri?
-    }
-
-    @Keep
-    data object ContactUsNavigationPath : NavigatingPath() {
-        override val path: String
-            get() = "contact_us"
-        override var uri: Uri? = null
-
-        val isRefreshRequired: Boolean
-            get() {
-                return uri?.getBooleanQueryParameter("refresh_required", false) ?: false
-            }
-    }
-
-    @Keep
-    enum class NavigatingPathType(val navigatingPath: NavigatingPath) {
-        `contact_us`(ContactUsNavigationPath)
     }
 }
