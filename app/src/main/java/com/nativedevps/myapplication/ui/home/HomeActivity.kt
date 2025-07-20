@@ -49,8 +49,8 @@ class HomeActivity : NativeDevpsBaseActivity<ActivityHomeBinding, HomeViewModel>
                         ContactUsActivity.startSession(
                             this@HomeActivity,
                             viewModel,
-                            Intent().apply {
-                                data = navigatingPath.uri
+                            Bundle().apply {
+                                putString("uri", navigatingPath.uri.toString())
                             }
                         )
                     }
