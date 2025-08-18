@@ -18,6 +18,7 @@ import com.nativedevps.ui.about.dialog.AboutDialog
 import com.nativedevps.ui.contact_us.ContactUsActivity
 import com.nativedevps.ui.contact_us.NotificationNavigation.ContactUsNavigationPath
 import com.nativedevps.ui.contact_us.findNavigatingPath
+import com.nativedevps.ui.rating.RatingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import io.karn.notify.Notify
 import kotlinx.coroutines.delay
@@ -40,7 +41,10 @@ class HomeActivity : NativeDevpsBaseActivity<ActivityHomeBinding, HomeViewModel>
         if (savedInstanceState != null) {
             return
         }
-        Log.v("checkNotificationPayload", "LinkUrl: ${intent.extras?.getString(CONST_NOTIFICATION_LINK_URL)}")
+        Log.v(
+            "checkNotificationPayload",
+            "LinkUrl: ${intent.extras?.getString(CONST_NOTIFICATION_LINK_URL)}"
+        )
 
         intent.extras?.getString(CONST_NOTIFICATION_LINK_URL)?.let { Uri.parse(it) }?.apply {
             findNavigatingPath { navigatingPath ->
@@ -60,6 +64,9 @@ class HomeActivity : NativeDevpsBaseActivity<ActivityHomeBinding, HomeViewModel>
     }
 
     private fun initListener() = with(binding) {
+        ratingButton.setOnClickListener {
+            RatingDialog.build(supportFragmentManager, this@HomeActivity)
+        }
         informationButton.setOnClickListener {
             showInformation("Some information ${getStringDateFromMillis(now)}")
         }

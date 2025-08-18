@@ -71,6 +71,13 @@
                 android:layout_height="wrap_content"
                 android:text="Notification" />
 
+            <Button
+                android:textAllCaps="false"
+                android:id="@+id/ratingButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rating" />
+
 
 
 
