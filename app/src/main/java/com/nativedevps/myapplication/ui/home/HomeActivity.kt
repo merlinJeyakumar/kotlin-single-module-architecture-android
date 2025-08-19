@@ -17,7 +17,7 @@ import com.nativedevps.support.utility.threading.runOnAsyncThread
 import com.nativedevps.ui.about.dialog.AboutDialog
 import com.nativedevps.ui.contact_us.ContactUsActivity
 import com.nativedevps.ui.contact_us.NotificationNavigation.ContactUsNavigationPath
-import com.nativedevps.ui.contact_us.findNavigatingPath
+import com.nativedevps.ui.contact_us.findNotificationNavigatingPath
 import com.nativedevps.ui.rating.RatingDialog
 import dagger.hilt.android.AndroidEntryPoint
 import io.karn.notify.Notify
@@ -47,7 +47,7 @@ class HomeActivity : NativeDevpsBaseActivity<ActivityHomeBinding, HomeViewModel>
         )
 
         intent.extras?.getString(CONST_NOTIFICATION_LINK_URL)?.let { Uri.parse(it) }?.apply {
-            findNavigatingPath { navigatingPath ->
+            findNotificationNavigatingPath { navigatingPath ->
                 when (navigatingPath) {
                     is ContactUsNavigationPath -> {
                         ContactUsActivity.startSession(
