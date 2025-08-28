@@ -6,4 +6,7 @@ project(':jeyksupport').projectDir = new File(rootDir, 'modules/jeyksupport')
 include ':nativedevps'
 project(':nativedevps').projectDir = new File(rootDir, 'modules/nativedevps/nativedevps')
 
+include ':S3Agent'
+project(':S3Agent').projectDir = new File(rootDir, 'modules/S3Agent')
+
 rootProject.name = 'NativeDevps-Arch'
