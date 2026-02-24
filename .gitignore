@@ -35,3 +35,6 @@ captures/
 .idea/
 *.iml
 /buildSrc/build/
+
+# Ignore modules directory
+modules/
