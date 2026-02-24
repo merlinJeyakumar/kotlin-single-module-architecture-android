@@ -34,5 +34,4 @@ captures/
 
 .idea/
 *.iml
-/modules/*
 /buildSrc/build/
