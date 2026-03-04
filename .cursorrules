@@ -1,0 +1,32 @@
+# NativeDevps Architecture Project Rules
+
+These guidelines mandate how development must be approached when working inside the `android-arch-nativedevps` environment. These rules ensure uniformity with the NativeDevps framework and the underlying `jeyksupport` engine.
+
+## 1. Module Boundaries
+- **App Module (`:app`)**: This module is strictly for the consumer application's specific business logic and UI screens.
+- **NativeDevps Module (`:nativedevps`)**: This module houses common reusable features across projects (e.g., standard Login, Notifications, Rating, Contact Us layouts, and NativeDevps Base classes). Modifications here affect all standard templates.
+- **JeyKSupport Module (`:jeyksupport`)**: The foundational SDK containing utility extensions, core architecture bases (UseCases, ViewModels), and generic views (BottomSheets, Delegates).
+
+## 2. Core MVVM Architecture & ViewModels
+- **Mandatory Base Classes**: All Activities MUST inherit from `NativeDevpsBaseActivity`, and all Fragments from `NativeDevpsBaseFragment`. ViewModels MUST inherit from `NativeDevpsBaseViewModel`.
+- **Repository Pattern**: Data layer operations must be encapsulated in Repositories, accessed purely via UseCases.
+- **FlowUseCase Execution**: ViewModels MUST execute asynchronous use-cases utilizing the `loadNCollect` or `runAndLoadOnMainThread` extensions. Do not use raw coroutines in ViewModels unless absolutely necessary.
+- **API Responses**: Network calls return sealed states (`SuccessApiResult`, `ErrorApiResult`, `StatusApiResult`). The `loadNCollect` extension manages UI loaders and error prompts automatically.
+
+## 3. UI and Views
+- **ViewBinding / DataBinding**: Exclusively utilize ViewBinding to manipulate the UI. Do not use `findViewById` or Kotlin Synthetics.
+- **Predefined Views over Custom Views**: Utilize `NativeDevpsProvider` to summon standard dialogs (`showInformation`, `showConfirmationDialog`, `showInputDialog`, `showListDialog`). Do not build isolated AlertDialogs.
+- **Predefined Screens**: If implementing basic feature flows like "Login", "About Us", or "Contact", launch the predefined activities available in the `:nativedevps` module (`LoginActivity`, `ContactUsActivity`, etc.).
+
+## 4. Dependencies and Injection
+- **Dagger Hilt**: Use constructor injection `@Inject constructor()` for ViewModels, UseCases, and Repositories. Annotate components with `@AndroidEntryPoint` and `@HiltViewModel`.
+- **BuildSrc**: All implementation strings and library versionings MUST be managed through the `buildSrc` module. Do not hardcode versions inside module-specific `build.gradle.kts` files.
+
+## 5. Coroutines & State Management
+- Run purely on Coroutines/Flows.
+- Listen to state via `StateFlow` and utilize `.asLiveData().observe()` exclusively inside the View's `initObserver` block.
+- Always implement logic in dedicated `initData()`, `initView()`, `initListener()`, and `initObserver()` functions as declared in base classes.
+
+## 6. App Lifecycle & Updates
+- Do not build manual App Update screens. The architecture performs validation checks automatically via `NativeDevpsBaseActivity.showHideUpdateDialog` triggered by the `requiredVersion` Flow.
+- Notification permission requests and analytics triggers handles themselves systematically. Leverage the provided structure instead of writing logic manually.
