@@ -1,41 +1,94 @@
-# NativeDevps Android Architecture (android-arch-nativedevps)
+# NativeDevps Android Architecture Template
 
-## Overview
-`android-arch-nativedevps` is the standard template architecture repository used across NativeDevps Android projects. It provides a robust, Highly Maintainable Single-Module MVVM Architecture built on top of Jetpack components, Kotlin Coroutines, and Dagger Hilt.
+A starter Android application structure for teams that want a consistent place to begin with screens, state, storage, remote services, notifications, and application configuration.
 
-It heavily integrates tools from the **[JeyKSupport](https://github.com/merlinJeyakumar/jeyksupport)** SDK and provides a secondary **NativeDevps module** (`nativedevps`) that houses standardization classes, predefined UI, and project-specific extensions.
+This repository is a **template and demonstration shell**, not a complete consumer product. The included `app` module shows how shared NativeDevps components can be connected in a new Android application.
 
-## Project Structure
-The repository is modularized as follows:
-- `:app`: The consumer module for standard application code implementation (`com.nativedevps.myapplication`).
-- `:jeyksupport`: Contains foundational base classes, deep utility extensions, flow executors, and generic methodologies.
-- `:nativedevps`: A specialized module that builds upon `jeyksupport`. It establishes standard UI flows (Login, Register, Contact Us) and NativeDevps-specific base classes.
-- `:S3Agent`: SDK module for AWS S3 integrations (if applicable).
-- `buildSrc`: Handles Gradle dependency management and logic configuration separately.
+## What it demonstrates
 
-## Core Architectural Components
+- A launch flow through `HomeActivity` with sample dialogs, loading states, rating/about entry points, notification handling, and a mock API action.
+- Application startup wiring for Hilt dependency injection, WorkManager, and Firebase Remote Config.
+- Reference patterns for screen state, preferences, local database access, and remote service calls.
+- Firebase Cloud Messaging, crash-reporting, notification, and FileProvider integration points for a consuming application.
+- Separate development and production build flavors.
+- View Binding and Data Binding support for application screens.
+- Shared UI and utility foundations supplied by the required local NativeDevps modules.
 
-### 1. Base UI Components (`com.nativedevps.base`)
-- **`NativeDevpsBaseActivity` & `NativeDevpsBaseFragment`**: Enhances `jeyksupport`'s `BaseActivity` by providing mandatory NativeDevps-specific features automatically:
-  - **App Update Enforcement**: Automatically checks `requiredVersion` against the Play Store. Prompts users when an updated version is required.
-  - **Permission Management**: Centralized flow for Android 13+ (`POST_NOTIFICATIONS`) prompt requesting and analytics tracking.
-  - **Dialogs & Delegations**: Native access to standardized `InputDialog`, `ListDialog`, `InformationDialog`, and `ConfirmationDialog` via `NativeDevpsProvider`.
-- **`NativeDevpsBaseViewModel`**: Built upon `BaseViewModel`, extending its state handling.
-  - Exposes essential state flows out-of-the-box (`isLoggedIn`, `userAccountDetails`, `requiredVersion`, `signatureVerified`).
-  - Contains **FlowUseCase Executors** (`loadNCollect` / `loadOnQueue`) extending `jeyksupport` for easy backend communication, handling progress loaders, API success (`SuccessApiResult`), and unified API error prompting automatically.
+## How the template is organised
 
-### 2. Standardized Predefined UI (`com.nativedevps.ui`)
-The `nativedevps` module provides ready-to-use activities to avoid boilerplate for every new project.
-- **Login (`LoginActivity`)**: Pre-configured Validation, forgot password flows, and navigation extensions.
-- **Register (`RegisterActivity`)**: Default account creation layouts mapped with UseCases.
-- **Contact Us / Support (`ContactUsActivity`)**: Includes navigation routing payload parameters and support requests mechanisms.
-- **Rating (`RatingDialog`)**: Standardized implementation utilizing `UpdateRatingUseCase` for app store feedback tracking.
-- **Notification Overview (`NotificationActivity`)**: Built-in Firebase/OneSignal push payload history parsing.
+| Area | Purpose |
+| --- | --- |
+| `app/` | The application-specific module. It contains the demonstration launcher, sample screens, dependency wiring, local preferences, sample Room storage, and placeholder remote-service flows. |
+| `modules/jeyksupport` | Required local support-library checkout for shared Android foundations and utilities. |
+| `modules/nativedevps/nativedevps` | Required local NativeDevps module used by the template’s shared UI and application foundations. |
+| `modules/S3Agent` | Required local Android S3 helper module included by the Gradle settings. |
+| `buildSrc/` | Shared Gradle versions, dependency declarations, and build helpers. |
 
-### 3. Analytics Standard
-The architecture mandates structured analytics out-of-the-box via `NativeDevpsAnalytics`. Base components directly intercept default behaviors (e.g., Permission Denied) and push metrics to Firebase/Crashlytics automatically tracking standard conversions.
+The three local modules are required by `settings.gradle`. Their implementation source is not included in this repository clone, so Gradle sync and builds need those directories to be available at the listed paths.
 
-## Principles to adhere to Development:
-- Implement any new network logic through `FlowUseCase` and execute it with `loadNCollect` in ViewModels.
-- Always use `ViewDataBinding` inheriting from `NativeDevpsBaseActivity`.
-- Treat the `:app` module as purely application logic, avoiding re-inventing authentication or standard dialogue features already present in `:nativedevps`.
+## Included application flows
+
+- **Home demonstration:** opens inherited dialogs and loaders, handles a sample notification/deep-link path, and triggers a mock initial request.
+- **Preference storage:** shows a DataStore-backed preference layer for app values.
+- **Local storage:** includes a sample Room database, DAO, and entity pattern.
+- **Remote-service wiring:** includes Retrofit/OkHttp and Flow-oriented use-case examples that can be replaced with product-specific services.
+- **Firebase hooks:** includes Remote Config startup, notification service registration, Crashlytics dependencies, and Google Services plugin wiring.
+- **Shared module hooks:** declares integration points for the required local modules without documenting their unavailable implementation source as part of this repository.
+
+## Prerequisites
+
+Before opening the project in Android Studio, provide these local modules:
+
+```text
+modules/
+├── jeyksupport/
+├── nativedevps/
+│   └── nativedevps/
+└── S3Agent/
+```
+
+The current application module is configured with:
+
+- Java 17
+- Android `minSdk 21`
+- Android `compileSdk 35` and `targetSdk 35`
+- View Binding and Data Binding
+- Development and production product flavors
+- Hilt, Retrofit/OkHttp, Room, DataStore, Firebase, Navigation, and WorkManager
+
+Create or select your own Firebase project before using Firebase, Crashlytics, Remote Config, or Cloud Messaging in a new application. Consumer applications must use their own package identity and service configuration rather than relying on template configuration.
+
+## Getting started
+
+1. Place the required local modules in the paths shown above.
+2. Open the repository in Android Studio with Java 17 installed.
+3. Configure the application ID, app name, Firebase project, backend URLs, and product-specific values for the new application.
+4. Sync Gradle and select the appropriate development or production build variant.
+5. Build the application module after replacing the demonstration services with the intended product integrations.
+
+From the repository root, the development debug variant can be assembled with:
+
+```bash
+./gradlew :app:assembleDevelopmentDebug
+```
+
+On Windows:
+
+```bat
+gradlew.bat :app:assembleDevelopmentDebug
+```
+
+## Current scope
+
+This repository is a reusable starting point. The included screens, user models, local database, notification flow, and remote-service examples are reference material rather than a finished business application.
+
+Before using the template as a production baseline, review and replace:
+
+- sample API routes and demonstration data flows;
+- application identity and Firebase service configuration;
+- network, storage, notification, and privacy settings for the target product;
+- the local-module versions and integration points required by the consuming application.
+
+## Verification status
+
+The repository includes unit and instrumentation test scaffolding. The source does not demonstrate completed end-to-end product-flow coverage, so a consuming application should add feature-specific tests and release validation before production use.
